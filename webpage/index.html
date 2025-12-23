@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>AGV</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+
+  <body>
+    <div class="box">
+      <div class="header">
+        <div class="device">ESP-RIO-01</div>
+        <div class="fw" id="fw">Firmware: --</div>
+      </div>
+
+      <h2>DO0 Control</h2>
+
+      <div class="section row">
+        <span>DO0 Power</span>
+        <label class="switch">
+          <input type="checkbox" id="p" />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <p id="pt">--</p>
+
+      <div class="section row">
+        <span>Latch</span>
+        <label class="switch">
+          <input type="checkbox" id="l" />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="section">
+        <label>Latch Time (sec)</label>
+        <input type="number" id="d" min="1" />
+      </div>
+
+      <div class="section">
+        <label>DO0 State:</label>
+        <strong id="s">--</strong>
+      </div>
+
+      <a href="/settings.html">Settings</a>
+    </div>
+
+    <script>
+      const p = document.getElementById("p");
+      const l = document.getElementById("l");
+      const d = document.getElementById("d");
+      const s = document.getElementById("s");
+      const pt = document.getElementById("pt");
+      const fw = document.getElementById("fw");
+
+      let busy = false;
+      let latchInit = false;
+
+      /* ---------- Info ---------- */
+      fetch("/api/info")
+        .then((r) => r.json())
+        .then((i) => {
+          fw.textContent = "Firmware: " + i.fw;
+        });
+
+      /* ---------- Sync ---------- */
+      function sync() {
+        if (busy) return;
+
+        fetch("/api/status")
+          .then((r) => (r.ok ? r.json() : null))
+          .then((j) => {
+            if (!j) return;
+
+            p.checked = j.do0 === 1;
+            s.textContent = j.do0 ? "HIGH" : "LOW";
+
+            pt.textContent =
+              j.latch_rem > 0
+                ? "Latch remaining: " + j.latch_rem + "s"
+                : j.do0
+                ? "ON"
+                : "OFF";
+
+            if (!latchInit) {
+              d.value = j.latch;
+              latchInit = true;
+            }
+          })
+          .catch(() => {});
+      }
+
+      /* ---------- DO0 ---------- */
+      p.onclick = () => {
+        if (busy) return;
+        busy = true;
+
+        fetch("/api/do0", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: "on=" + (p.checked ? 1 : 0),
+        }).finally(() => {
+          setTimeout(() => {
+            busy = false;
+            sync();
+          }, 300);
+        });
+      };
+
+      /* ---------- Latch ---------- */
+      l.onchange = () => {
+        l.checked = false;
+        busy = true;
+        pt.textContent = "LATCHING...";
+        fetch("/api/do0", { method: "POST", body: "latch=1" }).finally(() => {
+          busy = false;
+          sync();
+        });
+      };
+
+      d.onfocus = () => {
+        editingLatch = true;
+      };
+
+      d.onblur = () => {
+        editingLatch = false;
+      };
+
+      /* ---------- Latch Time ---------- */
+      d.onchange = () => {
+        fetch("/api/latch", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: d.value,
+        });
+      };
+
+      /* ---------- Start ---------- */
+      sync();
+      setInterval(sync, 500);
+    </script>
+  </body>
+</html>

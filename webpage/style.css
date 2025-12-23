@@ -1,0 +1,163 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: system-ui, sans-serif;
+  background: #f5f7fb;
+}
+
+.box {
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.device {
+  font-weight: 600;
+}
+.fw {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+h2,
+h3 {
+  margin: 10px 0;
+  color: #0f172a;
+}
+
+.section {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid #e2e8f0;
+}
+
+label,
+small,
+p {
+  font-size: 0.8rem;
+  color: #475569;
+}
+
+input {
+  width: 95%;
+  margin-top: 6px;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5f5;
+}
+
+input:focus {
+  outline: 0;
+  border-color: #2563eb;
+}
+input[type="file"] {
+  font-size: 0.8rem;
+}
+
+button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  border: 0;
+  border-radius: 999px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+/* Switch */
+.switch {
+  width: 48px;
+  height: 26px;
+  position: relative;
+}
+.switch input {
+  display: none;
+}
+.slider {
+  position: absolute;
+  inset: 0;
+  background: #cbd5f5;
+  border-radius: 999px;
+}
+.slider:before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 3px;
+  top: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+.switch input:checked + .slider {
+  background: #22c55e;
+}
+.switch input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+.w,
+.empty {
+  margin-top: 6px;
+  padding: 8px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.empty {
+  text-align: center;
+  color: #94a3b8;
+}
+
+a {
+  display: inline-block;
+  margin-top: 14px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.file-wrap input[type="file"]::file-selector-button,
+.file-wrap input[type="file"]::-webkit-file-upload-button {
+  margin-right: 8px;
+  padding: 5px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: #e2e8f0;
+  font-size: 0.75rem;
+}
+
+/* Fix checkbox alignment in row */
+.row input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+
+/* Minor: keep action links readable inside wifi cards */
+.wifi-actions a {
+  color: #2563eb;
+  text-decoration: none;
+}

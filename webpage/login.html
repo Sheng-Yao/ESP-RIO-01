@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Login</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="box">
+      <h2>Login</h2>
+      <form id="f">
+        <input id="u" name="u" placeholder="Username" required />
+        <input
+          id="p"
+          name="p"
+          type="password"
+          placeholder="Password"
+          required
+        />
+        <button>Login</button>
+        <small id="m"></small>
+      </form>
+    </div>
+
+    <script>
+      const f = document.getElementById("f");
+      const u = document.getElementById("u");
+      const p = document.getElementById("p");
+      const m = document.getElementById("m");
+
+      f.onsubmit = (e) => {
+        e.preventDefault();
+        fetch("/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: "username=" + u.value + "&password=" + p.value,
+        })
+          .then((r) => r.text())
+          .then((t) =>
+            t == "OK" ? (location = "/index.html") : (m.textContent = "Invalid")
+          );
+      };
+    </script>
+  </body>
+</html>
