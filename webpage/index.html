@@ -351,6 +351,15 @@
             st_do0.textContent = j.do0 != null ? (j.do0 ? "ON" : "OFF") : "--";
             st_temp.textContent = j.temp != null ? j.temp + " °C" : "--";
             st_uptime.textContent = j.uptime != null ? fmtSecs(j.uptime) : "--";
+            if (j.latch_time != null) {
+              const lt = Number(j.latch_time);
+              if (Number.isFinite(lt)) {
+                if (lastLatchTime === null) {
+                  lastLatchTime = lt;
+                  latchTime.value = lt;
+                }
+              }
+            }
 
             if (j.fw != null && fwEl.textContent === "--")
               fwEl.textContent = j.fw;
@@ -776,6 +785,7 @@
         const do0 = $("do0");
         const latchTime = $("latchTime");
         const ioApplyBtn = $("ioApplyBtn");
+        let lastLatchTime = null; // last latch time confirmed by ESP32
 
         function validateLatchTime() {
           const v = Number(latchTime.value);
@@ -791,24 +801,36 @@
             return;
           }
 
+          const newLatchTime = Number(latchTime.value);
+          const latchChanged =
+            lastLatchTime === null || newLatchTime !== lastLatchTime;
+
           ioApplyBtn.disabled = true;
           setMsg(ioMsg, "Applying...", true);
 
           try {
-            const t = Number(latchTime.value);
-
+            // Always apply DO state (safe and lightweight)
             await apiFetch("/api/do0", {
               method: "POST",
               headers: { "Content-Type": "application/x-www-form-urlencoded" },
               body: "on=" + (do0.checked ? "1" : "0"),
             });
 
-            if (latch0.checked && do0.checked) {
-              await apiFetch("/api/latch", { method: "POST", body: String(t) });
-              await apiFetch("/api/do0", { method: "POST", body: "latch=1" });
+            // Only send latch time if it CHANGED
+            if (latch0.checked && do0.checked && latchChanged) {
+              await apiFetch("/api/latch", {
+                method: "POST",
+                body: String(newLatchTime),
+              });
+
+              lastLatchTime = newLatchTime; // mark as applied
             }
 
-            setMsg(ioMsg, "Applied.", true);
+            if (latchChanged) {
+              setMsg(ioMsg, "Applied.", true);
+            } else {
+              setMsg(ioMsg, "No changes to apply.", true);
+            }
             loadStatus();
           } catch (e) {
             setMsg(ioMsg, "Apply failed.", false);
