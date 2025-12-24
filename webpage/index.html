@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>AGV</title>
+    <title>ESP-RIO-01</title>
     <link rel="stylesheet" href="/style.css" />
   </head>
 
@@ -10,134 +11,878 @@
     <div class="box">
       <div class="header">
         <div class="device">ESP-RIO-01</div>
-        <div class="fw" id="fw">Firmware: --</div>
+        <div class="fw">Firmware version: <span id="fw">--</span></div>
       </div>
 
-      <h2>DO0 Control</h2>
-
-      <div class="section row">
-        <span>DO0 Power</span>
-        <label class="switch">
-          <input type="checkbox" id="p" />
-          <span class="slider"></span>
-        </label>
-      </div>
-      <p id="pt">--</p>
-
-      <div class="section row">
-        <span>Latch</span>
-        <label class="switch">
-          <input type="checkbox" id="l" />
-          <span class="slider"></span>
-        </label>
+      <div class="top-actions">
+        <button class="logout" id="logoutBtn" type="button">Logout</button>
       </div>
 
-      <div class="section">
-        <label>Latch Time (sec)</label>
-        <input type="number" id="d" min="1" />
+      <div class="navbar" role="tablist" aria-label="Main Tabs">
+        <button class="tabbtn active" data-tab="status" type="button">
+          Status
+        </button>
+        <button class="tabbtn" data-tab="wifi" type="button">WiFi</button>
+        <button class="tabbtn" data-tab="io" type="button">IO</button>
+        <button class="tabbtn" data-tab="admin" type="button">Admin</button>
       </div>
 
-      <div class="section">
-        <label>DO0 State:</label>
-        <strong id="s">--</strong>
-      </div>
+      <!-- ================= Status ================= -->
+      <section id="tab-status" class="section">
+        <h3>WiFi Status</h3>
+        <div class="kv"><span>SSID</span><b id="st_ssid">--</b></div>
+        <div class="kv"><span>IP Address</span><b id="st_ip">--</b></div>
+        <div class="kv"><span>MAC Address</span><b id="st_mac">--</b></div>
+        <div class="kv"><span>RSSI</span><b id="st_rssi">--</b></div>
 
-      <a href="/settings.html">Settings</a>
+        <h3 style="margin-top: 14px">IO Status</h3>
+        <div class="kv"><span>DO0</span><b id="st_do0">--</b></div>
+
+        <h3 style="margin-top: 14px">Device</h3>
+        <div class="kv"><span>Temperature</span><b id="st_temp">--</b></div>
+        <div class="kv"><span>Uptime</span><b id="st_uptime">--</b></div>
+      </section>
+
+      <!-- ================= WiFi ================= -->
+      <section id="tab-wifi" class="section hidden">
+        <h3>Stored WiFi</h3>
+
+        <div id="pendingBox" class="pending hidden">
+          Pending WiFi changes are not applied yet.
+        </div>
+
+        <div class="table-wrap">
+          <table class="wifi-table" aria-label="Stored WiFi Profiles">
+            <colgroup>
+              <col class="ssid" />
+              <col class="mac" />
+              <col class="conn" />
+              <col class="act" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>SSID</th>
+                <th>MAC</th>
+                <th>Connected</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="wifiRows">
+              <tr>
+                <td colspan="4" class="center">Loading</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <button id="addWifiBtn" type="button">Add WiFi</button>
+
+        <!-- WiFi form -->
+        <div id="wifiFormWrap" class="hidden">
+          <div class="hr"></div>
+          <h3 id="wifiFormTitle">WiFi Settings</h3>
+
+          <input type="hidden" id="wifi_id" />
+
+          <label for="w_ssid">SSID</label>
+          <input id="w_ssid" />
+
+          <label for="w_pass">Password</label>
+          <input id="w_pass" type="password" />
+
+          <label for="w_mac">MAC Address (BSSID, optional)</label>
+          <input id="w_mac" placeholder="AA:BB:CC:DD:EE:FF" />
+
+          <label for="w_prio">Priority (0-255)</label>
+          <input id="w_prio" type="number" min="0" max="255" value="0" />
+
+          <label for="w_auth">Security</label>
+          <select id="w_auth">
+            <option value="psk">WPA2-PSK</option>
+            <option value="peap">WPA2-Enterprise PEAP</option>
+            <option value="tls">WPA2-Enterprise EAP-TLS</option>
+          </select>
+
+          <div id="peapFields" class="hidden">
+            <label for="w_ent_user">Enterprise Username</label>
+            <input id="w_ent_user" />
+
+            <label for="w_ent_pass">Enterprise Password</label>
+            <input id="w_ent_pass" type="password" />
+          </div>
+
+          <div id="tlsFields" class="hidden">
+            <label for="w_cert">Certificate (EAP-TLS)</label>
+            <input id="w_cert" type="file" />
+            <div class="smallnote">
+              Certificate upload requires firmware endpoints (example:
+              /wifi/cert).
+            </div>
+          </div>
+
+          <label for="w_ipmode">IP Method</label>
+          <select id="w_ipmode">
+            <option value="dhcp">DHCP</option>
+            <option value="fixed">Fixed IP</option>
+          </select>
+
+          <div id="ipFields" class="hidden">
+            <label for="w_ip">IP Address</label>
+            <input id="w_ip" placeholder="192.168.1.50" />
+          </div>
+
+          <div id="wifiMsg" class="msg"></div>
+
+          <button id="wifiSaveBtn" type="button">Save (Staged)</button>
+          <button id="wifiCancelBtn" type="button" class="small neutral">
+            Cancel
+          </button>
+        </div>
+
+        <div class="hr"></div>
+
+        <button id="applyWifiBtn" class="danger" type="button" disabled>
+          Apply Changes &amp; Reboot
+        </button>
+
+        <div id="applyMsg" class="msg"></div>
+      </section>
+
+      <!-- ================= IO ================= -->
+      <section id="tab-io" class="section hidden">
+        <h3>GPIO Output</h3>
+
+        <b>DO0</b>
+
+        <div class="row">
+          <span>Latch Enable</span>
+          <label class="switch">
+            <input type="checkbox" id="latch0" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="row">
+          <span>GPIO Control (ON / OFF)</span>
+          <label class="switch">
+            <input type="checkbox" id="do0" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="hr"></div>
+
+        <label for="latchTime">Latch Time (seconds)</label>
+        <input id="latchTime" type="number" min="1" max="300" value="" />
+
+        <div id="ioMsg" class="msg"></div>
+        <button id="ioApplyBtn" type="button">Apply</button>
+      </section>
+
+      <!-- ================= Admin ================= -->
+      <section id="tab-admin" class="section hidden">
+        <h3>Change Password</h3>
+
+        <label for="oldpw">Old Password</label>
+        <input id="oldpw" type="password" />
+
+        <label for="newpw">New Password</label>
+        <input id="newpw" type="password" style="margin-bottom: 14px" />
+
+        <div id="adminMsg" class="msg"></div>
+        <button id="pwBtn" type="button">Update</button>
+
+        <h3 style="margin-top: 18px">Factory Reset</h3>
+        <button id="factoryBtn" class="danger" type="button">
+          Factory Reset
+        </button>
+      </section>
     </div>
 
     <script>
-      const p = document.getElementById("p");
-      const l = document.getElementById("l");
-      const d = document.getElementById("d");
-      const s = document.getElementById("s");
-      const pt = document.getElementById("pt");
-      const fw = document.getElementById("fw");
+      (() => {
+        /* ================= Helpers ================= */
+        const $ = (id) => document.getElementById(id);
+        const setMsg = (el, text, ok) => {
+          el.className = "msg " + (ok ? "ok" : "err");
+          el.textContent = text || "";
+        };
+        const esc = (s) =>
+          String(s ?? "").replace(
+            /[&<>"']/g,
+            (c) =>
+              ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;",
+              }[c])
+          );
 
-      let busy = false;
-      let latchInit = false;
+        /* ================= Session & fetch wrapper ================= */
+        const INACT_MS = 30 * 60 * 1000;
+        let lastAct = Date.now();
 
-      /* ---------- Info ---------- */
-      fetch("/api/info")
-        .then((r) => r.json())
-        .then((i) => {
-          fw.textContent = "Firmware: " + i.fw;
+        ["click", "keydown", "touchstart"].forEach((ev) =>
+          addEventListener(
+            ev,
+            () => {
+              lastAct = Date.now();
+            },
+            { passive: true }
+          )
+        );
+
+        async function apiFetch(url, opts = {}) {
+          opts.credentials = "include";
+          const r = await fetch(url, opts);
+          if (r.status === 401 || r.status === 403) {
+            location = "/login.html";
+            throw new Error("unauthorized");
+          }
+          return r;
+        }
+
+        async function logout() {
+          try {
+            await apiFetch("/api/logout", { method: "POST" });
+          } catch (e) {}
+          location = "/login.html";
+        }
+        $("logoutBtn").addEventListener("click", logout);
+
+        // Reduce unnecessary work when tab is not visible
+        let pageVisible = !document.hidden;
+        document.addEventListener("visibilitychange", () => {
+          pageVisible = !document.hidden;
         });
 
-      /* ---------- Sync ---------- */
-      function sync() {
-        if (busy) return;
+        // Timeout checker + optional ping (lower frequency to reduce ESP32 load)
+        setInterval(async () => {
+          if (Date.now() - lastAct > INACT_MS) {
+            await logout();
+            return;
+          }
+          if (!pageVisible) return;
+        }, 15000);
 
-        fetch("/api/status")
-          .then((r) => (r.ok ? r.json() : null))
-          .then((j) => {
-            if (!j) return;
+        /* ================= Tabs ================= */
+        const tabBtns = Array.from(document.querySelectorAll(".tabbtn"));
+        const tabSections = {
+          status: $("tab-status"),
+          wifi: $("tab-wifi"),
+          io: $("tab-io"),
+          admin: $("tab-admin"),
+        };
 
-            p.checked = j.do0 === 1;
-            s.textContent = j.do0 ? "HIGH" : "LOW";
+        let activeTab = "status";
 
-            pt.textContent =
-              j.latch_rem > 0
-                ? "Latch remaining: " + j.latch_rem + "s"
-                : j.do0
-                ? "ON"
-                : "OFF";
+        function showTab(name) {
+          activeTab = name;
+          for (const k in tabSections)
+            tabSections[k].classList.toggle("hidden", k !== name);
 
-            if (!latchInit) {
-              d.value = j.latch;
-              latchInit = true;
+          tabBtns.forEach((b) =>
+            b.classList.toggle("active", b.dataset.tab === name)
+          );
+          history.replaceState(null, "", "#" + name);
+
+          if (name === "wifi") {
+            loadWifiListOnce();
+          }
+          if (name === "status") {
+            loadStatus();
+          }
+        }
+
+        tabBtns.forEach((b) =>
+          b.addEventListener("click", () => showTab(b.dataset.tab))
+        );
+
+        const startTab = (location.hash || "#status").slice(1);
+        showTab(tabSections[startTab] ? startTab : "status");
+
+        addEventListener("hashchange", () => {
+          const h = (location.hash || "#status").slice(1);
+          showTab(tabSections[h] ? h : "status");
+        });
+
+        /* ================= Status ================= */
+        const fwEl = $("fw");
+        const st_ssid = $("st_ssid"),
+          st_ip = $("st_ip"),
+          st_mac = $("st_mac"),
+          st_rssi = $("st_rssi");
+        const st_do0 = $("st_do0"),
+          st_temp = $("st_temp"),
+          st_uptime = $("st_uptime");
+
+        function fmtSecs(sec) {
+          sec = Math.max(0, sec | 0);
+          const d = Math.floor(sec / 86400);
+          sec -= d * 86400;
+          const h = Math.floor(sec / 3600);
+          sec -= h * 3600;
+          const m = Math.floor(sec / 60);
+          const s = sec - m * 60;
+          const parts = [];
+          if (d) parts.push(d + "d");
+          if (h || parts.length) parts.push(h + "h");
+          if (m || parts.length) parts.push(m + "m");
+          parts.push(s + "s");
+          return parts.join(" ");
+        }
+
+        async function loadStatus() {
+          if (!pageVisible) return;
+          try {
+            const r = await apiFetch("/api/status");
+            const j = await r.json();
+
+            st_ssid.textContent = j.ssid ?? j.wifi_ssid ?? "--";
+            st_ip.textContent = j.ip ?? j.wifi_ip ?? "--";
+            st_mac.textContent = j.mac ?? j.wifi_mac ?? "--";
+            st_rssi.textContent =
+              (j.rssi ?? j.wifi_rssi) != null
+                ? (j.rssi ?? j.wifi_rssi) + " dBm"
+                : "--";
+
+            st_do0.textContent = j.do0 != null ? (j.do0 ? "ON" : "OFF") : "--";
+            st_temp.textContent = j.temp != null ? j.temp + " °C" : "--";
+            st_uptime.textContent = j.uptime != null ? fmtSecs(j.uptime) : "--";
+
+            if (j.fw != null && fwEl.textContent === "--")
+              fwEl.textContent = j.fw;
+          } catch (e) {}
+        }
+
+        setInterval(() => {
+          if (activeTab === "status") loadStatus();
+        }, 3000);
+
+        /* ================= WiFi staging model =================
+           - ESP32 is NOT updated on Save/Delete/Edit
+           - Only updated when Apply Changes & Reboot is pressed
+        */
+        const wifiRows = $("wifiRows");
+        const addWifiBtn = $("addWifiBtn");
+        const wifiFormWrap = $("wifiFormWrap");
+        const wifiFormTitle = $("wifiFormTitle");
+        const wifiMsg = $("wifiMsg");
+        const applyMsg = $("applyMsg");
+        const pendingBox = $("pendingBox");
+        const applyWifiBtn = $("applyWifiBtn");
+
+        const wifi_id = $("wifi_id");
+        const w_ssid = $("w_ssid");
+        const w_pass = $("w_pass");
+        const w_mac = $("w_mac");
+        const w_prio = $("w_prio");
+        const w_auth = $("w_auth");
+        const peapFields = $("peapFields");
+        const tlsFields = $("tlsFields");
+        const w_ent_user = $("w_ent_user");
+        const w_ent_pass = $("w_ent_pass");
+        const w_cert = $("w_cert");
+        const w_ipmode = $("w_ipmode");
+        const ipFields = $("ipFields");
+        const w_ip = $("w_ip");
+
+        const wifiSaveBtn = $("wifiSaveBtn");
+        const wifiCancelBtn = $("wifiCancelBtn");
+
+        const MAX_WIFI_PROFILES = 5;
+
+        // staging state
+        let wifiLoaded = false;
+        let wifiOriginal = []; // last fetched from ESP32
+        let wifiStaged = []; // user edits (not applied yet)
+        let wifiDirty = false; // pending changes
+
+        function setWifiDirty(on) {
+          wifiDirty = !!on;
+          pendingBox.classList.toggle("hidden", !wifiDirty);
+          applyWifiBtn.disabled = !wifiDirty;
+        }
+
+        function clone(obj) {
+          return JSON.parse(JSON.stringify(obj));
+        }
+
+        function normalizeProfile(p) {
+          // ensure consistent keys in staging
+          return {
+            id: p.id ?? null,
+            ssid: p.ssid ?? "",
+            bssid: p.bssid ?? p.mac ?? "",
+            priority: p.priority ?? 0,
+            auth: p.auth ?? "psk",
+            user: p.user ?? "",
+            ip_mode: p.ip_mode ?? "dhcp",
+            ip: p.ip ?? "",
+            // do not stage secrets unless entered
+          };
+        }
+
+        async function loadWifiListOnce() {
+          if (wifiLoaded) {
+            renderWifiList(wifiStaged);
+            updateAddWifiButtonState();
+            return;
+          }
+          await loadWifiFromDevice();
+        }
+
+        async function loadWifiFromDevice() {
+          try {
+            const r = await apiFetch("/wifi/list");
+            const d = await r.json();
+            const arr = Array.isArray(d) ? d : [];
+            wifiOriginal = arr.map(normalizeProfile);
+            wifiStaged = clone(wifiOriginal);
+            wifiLoaded = true;
+            setWifiDirty(false);
+            renderWifiList(wifiStaged);
+            updateAddWifiButtonState();
+          } catch (e) {
+            wifiRows.innerHTML = `<tr><td colspan="4" class="center">Failed to load</td></tr>`;
+          }
+        }
+
+        function resetWifiForm() {
+          wifi_id.value = "";
+          w_ssid.value = "";
+          w_pass.value = "";
+          w_mac.value = "";
+          w_prio.value = "0";
+          w_auth.value = "psk";
+          w_ent_user.value = "";
+          w_ent_pass.value = "";
+          w_cert.value = "";
+          w_ipmode.value = "dhcp";
+          w_ip.value = "";
+          setMsg(wifiMsg, "", true);
+          updateWifiConditionalUI();
+        }
+
+        function openWifiForm(mode, item) {
+          wifiFormWrap.classList.remove("hidden");
+          wifiFormTitle.textContent =
+            mode === "edit" ? "Edit WiFi" : "Add WiFi";
+          setMsg(wifiMsg, "", true);
+
+          if (mode === "edit" && item) {
+            wifi_id.value = String(item.id ?? "");
+            w_ssid.value = item.ssid ?? "";
+            w_mac.value = item.bssid ?? "";
+            w_prio.value = String(item.priority ?? 0);
+            w_auth.value =
+              item.auth === "peap"
+                ? "peap"
+                : item.auth === "tls"
+                ? "tls"
+                : "psk";
+            w_ent_user.value = item.user ?? "";
+            w_ent_pass.value = ""; // do not prefill
+            w_pass.value = ""; // do not prefill
+            w_ipmode.value = item.ip_mode ?? "dhcp";
+            w_ip.value = item.ip ?? "";
+          } else {
+            resetWifiForm();
+          }
+          updateWifiConditionalUI();
+        }
+
+        function closeWifiForm() {
+          wifiFormWrap.classList.add("hidden");
+          resetWifiForm();
+        }
+
+        function updateWifiConditionalUI() {
+          const a = w_auth.value;
+          peapFields.classList.toggle("hidden", a !== "peap");
+          tlsFields.classList.toggle("hidden", a !== "tls");
+          const ipm = w_ipmode.value;
+          ipFields.classList.toggle("hidden", ipm !== "fixed");
+        }
+
+        function updateAddWifiButtonState() {
+          addWifiBtn.disabled = wifiStaged.length >= MAX_WIFI_PROFILES;
+        }
+
+        w_auth.addEventListener("change", updateWifiConditionalUI);
+        w_ipmode.addEventListener("change", updateWifiConditionalUI);
+
+        addWifiBtn.addEventListener("click", () => {
+          // Only block ADD, not EDIT
+          if (wifiStaged.length >= MAX_WIFI_PROFILES) {
+            setMsg(
+              wifiMsg,
+              `Maximum of ${MAX_WIFI_PROFILES} WiFi profiles allowed. Delete one to add a new profile.`,
+              false
+            );
+            return;
+          }
+
+          openWifiForm("add");
+        });
+
+        wifiCancelBtn.addEventListener("click", closeWifiForm);
+
+        function isMac(s) {
+          return /^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$/.test(s);
+        }
+        function isIPv4(s) {
+          if (!/^(\d{1,3}\.){3}\d{1,3}$/.test(s)) return false;
+          return s.split(".").every((o) => {
+            const n = Number(o);
+            return n >= 0 && n <= 255;
+          });
+        }
+
+        function validateWifiForm() {
+          const ssid = w_ssid.value.trim();
+          const pass = w_pass.value;
+          const mac = w_mac.value.trim();
+          const prio = Number(w_prio.value);
+          const auth = w_auth.value;
+          const ipm = w_ipmode.value;
+          const ip = w_ip.value.trim();
+
+          if (!ssid) return "SSID is required.";
+          if (ssid.length > 32) return "SSID is too long (max 32).";
+          if (mac && !isMac(mac))
+            return "MAC format must be AA:BB:CC:DD:EE:FF.";
+          if (!Number.isFinite(prio) || prio < 0 || prio > 255)
+            return "Priority must be 0–255.";
+
+          if (auth === "psk") {
+            // allow empty pass on edit if user does not want to change it
+            // but for add, require it
+            const isEdit = !!wifi_id.value;
+            if (!isEdit && !pass) return "Password is required for WPA2-PSK.";
+            if (pass && pass.length > 64) return "Password too long (max 64).";
+          }
+          if (auth === "peap") {
+            if (!w_ent_user.value.trim())
+              return "Enterprise Username is required for PEAP.";
+            if (!w_ent_pass.value)
+              return "Enterprise Password is required for PEAP.";
+          }
+          if (auth === "tls") {
+            const isEdit = !!wifi_id.value;
+            if (!isEdit && (!w_cert.files || !w_cert.files[0]))
+              return "Certificate file is required for EAP-TLS.";
+          }
+
+          if (ipm === "fixed") {
+            if (!ip) return "IP Address is required for Fixed IP.";
+            if (!isIPv4(ip)) return "Invalid IP address.";
+          }
+          return "";
+        }
+
+        function renderWifiList(list) {
+          wifiRows.innerHTML = "";
+          const frag = document.createDocumentFragment();
+
+          if (!list || !list.length) {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td colspan="4" class="center">No WiFi configured</td>`;
+            frag.appendChild(tr);
+            wifiRows.appendChild(frag);
+            return;
+          }
+
+          for (const w of list) {
+            const tr = document.createElement("tr");
+            const connected = w.connected
+              ? `<span class="badge ok">Yes</span>`
+              : `<span class="badge no">No</span>`;
+
+            tr.innerHTML = `
+              <td>${esc(w.ssid || "--")}</td>
+              <td>${esc(w.bssid || "--")}</td>
+              <td class="center">${connected}</td>
+              <td class="center">
+                <div class="action-btns">
+                  <button class="icon-btn edit" type="button" title="Edit" data-act="edit" data-id="${esc(
+                    w.id
+                  )}">✏️</button>
+                  <button class="icon-btn delete" type="button" title="Delete" data-act="delete" data-id="${esc(
+                    w.id
+                  )}">🗑️</button>
+                </div>
+              </td>
+            `;
+            frag.appendChild(tr);
+          }
+          wifiRows.appendChild(frag);
+        }
+
+        function upsertStaged(profile) {
+          const idx = wifiStaged.findIndex(
+            (x) => String(x.id) === String(profile.id)
+          );
+          if (idx >= 0) wifiStaged[idx] = profile;
+          else wifiStaged.push(profile);
+        }
+
+        function newLocalId() {
+          // local-only ids: negative timestamp to avoid conflict with device ids
+          return -Date.now();
+        }
+
+        // Edit/Delete buttons operate on staged list ONLY
+        wifiRows.addEventListener("click", (e) => {
+          const btn = e.target.closest("button");
+          if (!btn) return;
+          const act = btn.dataset.act;
+          const id = btn.dataset.id;
+
+          const item = wifiStaged.find((x) => String(x.id) === String(id));
+          if (!item) return;
+
+          if (act === "edit") {
+            openWifiForm("edit", item);
+          } else if (act === "delete") {
+            if (!confirm("Delete this WiFi profile (staged)?")) return;
+            wifiStaged = wifiStaged.filter((x) => String(x.id) !== String(id));
+            setWifiDirty(true);
+            renderWifiList(wifiStaged);
+            updateAddWifiButtonState();
+            closeWifiForm();
+          }
+        });
+
+        // Save (staged only)
+        wifiSaveBtn.addEventListener("click", () => {
+          const err = validateWifiForm();
+          if (err) {
+            setMsg(wifiMsg, err, false);
+            return;
+          }
+
+          const isEdit = !!wifi_id.value;
+          if (!isEdit && wifiStaged.length >= MAX_WIFI_PROFILES) {
+            setMsg(
+              wifiMsg,
+              `Maximum of ${MAX_WIFI_PROFILES} WiFi profiles allowed.`,
+              false
+            );
+            return;
+          }
+
+          const profile = {
+            id: isEdit ? Number(wifi_id.value) : newLocalId(),
+            ssid: w_ssid.value.trim(),
+            bssid: w_mac.value.trim(),
+            priority: Number(w_prio.value),
+            auth: w_auth.value,
+            user: w_auth.value === "peap" ? w_ent_user.value.trim() : "",
+            ip_mode: w_ipmode.value,
+            ip: w_ipmode.value === "fixed" ? w_ip.value.trim() : "",
+            connected: false, // will be updated by device when applied
+            // secrets are intentionally not displayed in the table
+            _secrets: {
+              pass: w_pass.value || "",
+              ent_pass: w_auth.value === "peap" ? w_ent_pass.value || "" : "",
+              certSelected:
+                w_auth.value === "tls"
+                  ? !!(w_cert.files && w_cert.files[0])
+                  : false,
+            },
+          };
+
+          upsertStaged(profile);
+          setWifiDirty(true);
+          renderWifiList(wifiStaged);
+          updateAddWifiButtonState();
+
+          setMsg(
+            wifiMsg,
+            "Saved to staging. Press Apply Changes & Reboot to commit.",
+            true
+          );
+          closeWifiForm();
+        });
+
+        // Apply changes: ONE request to ESP32
+        applyWifiBtn.addEventListener("click", async () => {
+          if (!wifiDirty) return;
+
+          if (
+            !confirm(
+              "Apply WiFi changes and reboot the device?\n\n" +
+                "Connection may be lost temporarily."
+            )
+          )
+            return;
+
+          setMsg(applyMsg, "Applying...", true);
+          applyWifiBtn.disabled = true;
+
+          try {
+            // Build payload for firmware: keep it small and explicit
+            const payload = wifiStaged.map((w) => ({
+              id: w.id,
+              ssid: w.ssid,
+              mac: w.bssid || null,
+              priority: w.priority,
+              auth: w.auth,
+              ent_user: w.auth === "peap" ? w.user || "" : null,
+              // passwords/certs are optional; firmware can decide how to interpret empty
+              pass: w._secrets ? w._secrets.pass || "" : "",
+              ent_pass: w._secrets ? w._secrets.ent_pass || "" : "",
+              ip_mode: w.ip_mode,
+              ip: w.ip_mode === "fixed" ? w.ip || "" : null,
+            }));
+
+            // Single POST (firmware endpoint to implement later)
+            const r = await apiFetch("/wifi/apply", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+            if (!r.ok) throw new Error("apply failed");
+
+            // Optional: upload certs in a second step (kept here as logic only)
+            // If you later implement /wifi/cert, you can extend staged model to store file mapping.
+            // For now: logic placeholder only.
+
+            setWifiDirty(false);
+            setMsg(applyMsg, "Applied. Device rebooting...", true);
+
+            // Firmware may reboot; UI can redirect after a delay
+            setTimeout(() => {
+              // After reboot, user may need to log in again
+              location = "/login.html";
+            }, 4000);
+          } catch (e) {
+            setWifiDirty(true);
+            applyWifiBtn.disabled = false;
+            setMsg(
+              applyMsg,
+              "Apply failed (endpoint /wifi/apply not ready).",
+              false
+            );
+          }
+        });
+
+        /* ================= IO ================= */
+        const ioMsg = $("ioMsg");
+        const latch0 = $("latch0");
+        const do0 = $("do0");
+        const latchTime = $("latchTime");
+        const ioApplyBtn = $("ioApplyBtn");
+
+        function validateLatchTime() {
+          const v = Number(latchTime.value);
+          if (!Number.isFinite(v) || v < 1 || v > 300)
+            return "Latch Time must be 1–300 seconds.";
+          return "";
+        }
+
+        ioApplyBtn.addEventListener("click", async () => {
+          const err = validateLatchTime();
+          if (err) {
+            setMsg(ioMsg, err, false);
+            return;
+          }
+
+          ioApplyBtn.disabled = true;
+          setMsg(ioMsg, "Applying...", true);
+
+          try {
+            const t = Number(latchTime.value);
+
+            await apiFetch("/api/do0", {
+              method: "POST",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: "on=" + (do0.checked ? "1" : "0"),
+            });
+
+            if (latch0.checked && do0.checked) {
+              await apiFetch("/api/latch", { method: "POST", body: String(t) });
+              await apiFetch("/api/do0", { method: "POST", body: "latch=1" });
             }
-          })
-          .catch(() => {});
-      }
 
-      /* ---------- DO0 ---------- */
-      p.onclick = () => {
-        if (busy) return;
-        busy = true;
-
-        fetch("/api/do0", {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: "on=" + (p.checked ? 1 : 0),
-        }).finally(() => {
-          setTimeout(() => {
-            busy = false;
-            sync();
-          }, 300);
+            setMsg(ioMsg, "Applied.", true);
+            loadStatus();
+          } catch (e) {
+            setMsg(ioMsg, "Apply failed.", false);
+          } finally {
+            ioApplyBtn.disabled = false;
+          }
         });
-      };
 
-      /* ---------- Latch ---------- */
-      l.onchange = () => {
-        l.checked = false;
-        busy = true;
-        pt.textContent = "LATCHING...";
-        fetch("/api/do0", { method: "POST", body: "latch=1" }).finally(() => {
-          busy = false;
-          sync();
+        /* ================= Admin ================= */
+        const adminMsg = $("adminMsg");
+        const pwBtn = $("pwBtn");
+        const factoryBtn = $("factoryBtn");
+        const oldpw = $("oldpw");
+        const newpw = $("newpw");
+
+        function validatePw() {
+          if (!oldpw.value) return "Old Password is required.";
+          if (!newpw.value) return "New Password is required.";
+          if (newpw.value.length < 4) return "New Password too short.";
+          return "";
+        }
+
+        pwBtn.addEventListener("click", async () => {
+          const err = validatePw();
+          if (err) {
+            setMsg(adminMsg, err, false);
+            return;
+          }
+
+          pwBtn.disabled = true;
+          setMsg(adminMsg, "Updating...", true);
+
+          try {
+            const params = new URLSearchParams();
+            params.append("cu", oldpw.value);
+            params.append("p", newpw.value);
+
+            const r = await apiFetch("/login/save", {
+              method: "POST",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: params.toString(),
+            });
+
+            let ok = r.ok;
+            let msg = "Updated.";
+            try {
+              const j = await r.json();
+              ok = j.status === "ok";
+              msg = j.message || (ok ? "Updated." : "Failed.");
+            } catch (e) {}
+
+            setMsg(adminMsg, msg, ok);
+            if (ok) {
+              oldpw.value = "";
+              newpw.value = "";
+            }
+          } catch (e) {
+            setMsg(adminMsg, "Update failed.", false);
+          } finally {
+            pwBtn.disabled = false;
+          }
         });
-      };
 
-      d.onfocus = () => {
-        editingLatch = true;
-      };
-
-      d.onblur = () => {
-        editingLatch = false;
-      };
-
-      /* ---------- Latch Time ---------- */
-      d.onchange = () => {
-        fetch("/api/latch", {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: d.value,
+        factoryBtn.addEventListener("click", async () => {
+          if (!confirm("Factory reset device?")) return;
+          try {
+            await apiFetch("/api/factory_reset", { method: "POST" });
+          } catch (e) {}
+          await logout();
         });
-      };
 
-      /* ---------- Start ---------- */
-      sync();
-      setInterval(sync, 500);
+        /* ================= Init ================= */
+        loadStatus();
+      })();
     </script>
   </body>
 </html>

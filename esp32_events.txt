@@ -1,0 +1,76 @@
+[PC 2025-12-24 10:27:41] [ESP 250s] Relay OFF
+[PC 2025-12-24 10:27:41] [ESP 250s] Latch FINISHED
+[PC 2025-12-24 10:27:41] [ESP 250s] STA disconnected
+[PC 2025-12-24 10:27:41] [ESP 250s] AP ENABLED
+[PC 2025-12-24 10:27:41] [ESP 250s] AP clients = 1
+[PC 2025-12-24 10:28:19] [ESP 288s] Relay ON
+[PC 2025-12-24 10:28:21] [ESP 289s] Relay OFF
+[PC 2025-12-24 10:28:24] [ESP 293s] Relay ON
+[PC 2025-12-24 10:28:24] [ESP 293s] Latch STARTED (3s)
+[PC 2025-12-24 10:28:26] [ESP 295s] Relay OFF
+[PC 2025-12-24 10:28:26] [ESP 295s] Latch FINISHED
+[PC 2025-12-24 10:29:21] [ESP 349s] STA connected (got IP)
+[PC 2025-12-24 10:29:29] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-24 10:30:24] [ESP 412s] Relay OFF
+[PC 2025-12-24 10:30:24] [ESP 412s] Latch FINISHED
+[PC 2025-12-24 10:30:24] [ESP 412s] STA connected (got IP)
+[PC 2025-12-24 10:30:24] [ESP 412s] AP ENABLED
+[PC 2025-12-24 10:30:24] [ESP 412s] AP clients = 0
+[PC 2025-12-24 10:31:01] [ESP 449s] Relay ON
+[PC 2025-12-24 10:31:02] [ESP 451s] Relay OFF
+[PC 2025-12-24 10:31:05] [ESP 453s] Relay ON
+[PC 2025-12-24 10:31:05] [ESP 453s] Latch STARTED (2s)
+[PC 2025-12-24 10:31:07] [ESP 456s] Relay OFF
+[PC 2025-12-24 10:31:07] [ESP 456s] Latch FINISHED
+[PC 2025-12-24 10:33:05] [ESP 573s] Relay ON
+[PC 2025-12-24 10:33:06] [ESP 575s] Relay OFF
+[PC 2025-12-24 10:37:10] [ESP 819s] Relay ON
+[PC 2025-12-24 10:37:10] [ESP 819s] Latch STARTED (5s)
+[PC 2025-12-24 10:37:16] [ESP 825s] Relay OFF
+[PC 2025-12-24 10:37:16] [ESP 825s] Latch FINISHED
+[PC 2025-12-24 11:07:16] [ESP 2624s] Relay ON
+[PC 2025-12-24 11:07:20] [ESP 2629s] Relay OFF
+[PC 2025-12-24 11:08:19] Unexpected error: Modbus Error: [Input/Output] No response received after 3 retries, continue with next request
+[PC 2025-12-24 11:08:36] Unexpected error: Modbus Error: [Input/Output] No response received after 3 retries, continue with next request
+[PC 2025-12-24 11:08:50] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-24 11:09:59] [ESP 76s] ESP32 RESTART DETECTED
+[PC 2025-12-24 11:11:01] [ESP 137s] Relay ON
+[PC 2025-12-24 11:11:02] [ESP 139s] Relay OFF
+[PC 2025-12-24 11:11:03] [ESP 140s] Relay ON
+[PC 2025-12-24 11:11:05] [ESP 141s] Relay OFF
+[PC 2025-12-24 11:12:57] [ESP 253s] AP DISABLED
+[PC 2025-12-24 11:24:29] Unexpected error: Modbus Error: [Input/Output] No response received after 3 retries, continue with next request
+[PC 2025-12-24 11:24:37] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-24 11:29:11] [ESP 145s] Relay OFF
+[PC 2025-12-24 11:29:11] [ESP 145s] Latch FINISHED
+[PC 2025-12-24 11:29:11] [ESP 145s] STA connected (got IP)
+[PC 2025-12-24 11:29:11] [ESP 145s] AP ENABLED
+[PC 2025-12-24 11:29:11] [ESP 145s] AP clients = 0
+[PC 2025-12-24 11:31:05] [ESP 260s] AP DISABLED
+[PC 2025-12-24 11:33:23] [ESP 398s] Relay ON
+[PC 2025-12-24 11:33:34] [ESP 409s] Relay OFF
+[PC 2025-12-24 11:33:40] [ESP 414s] Relay ON
+[PC 2025-12-24 11:33:40] [ESP 414s] Latch STARTED (5s)
+[PC 2025-12-24 11:33:45] [ESP 420s] Relay OFF
+[PC 2025-12-24 11:33:45] [ESP 420s] Latch FINISHED
+[PC 2025-12-24 11:45:42] [ESP 1136s] Relay ON
+[PC 2025-12-24 11:45:43] [ESP 1137s] Relay OFF
+[PC 2025-12-24 11:56:13] [ESP 1768s] Relay ON
+[PC 2025-12-24 11:56:13] [ESP 1768s] Latch STARTED (5s)
+[PC 2025-12-24 11:56:19] [ESP 1774s] Relay OFF
+[PC 2025-12-24 11:56:19] [ESP 1774s] Latch FINISHED
+[PC 2025-12-24 12:15:15] [ESP 2910s] AP ENABLED
+[PC 2025-12-24 12:15:15] [ESP 2910s] AP clients = 1
+[PC 2025-12-24 12:15:16] [ESP 2911s] AP clients = 0
+[PC 2025-12-24 12:17:16] [ESP 3031s] AP DISABLED
+[PC 2025-12-24 12:17:34] [ESP 3049s] Relay ON
+[PC 2025-12-24 12:17:34] [ESP 3049s] Latch STARTED (5s)
+[PC 2025-12-24 12:17:39] [ESP 3054s] Relay OFF
+[PC 2025-12-24 12:17:40] [ESP 3054s] Latch FINISHED
+[PC 2025-12-24 12:17:41] [ESP 3055s] Relay ON
+[PC 2025-12-24 12:18:02] [ESP 3076s] Relay OFF
+[PC 2025-12-24 12:20:47] [ESP 3242s] Relay ON
+[PC 2025-12-24 12:20:47] [ESP 3242s] Latch STARTED (1s)
+[PC 2025-12-24 12:20:48] [ESP 3243s] Relay OFF
+[PC 2025-12-24 12:20:48] [ESP 3243s] Latch FINISHED
+[PC 2025-12-24 12:53:47] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)

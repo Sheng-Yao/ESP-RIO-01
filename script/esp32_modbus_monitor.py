@@ -3,7 +3,7 @@ from datetime import datetime
 import time
 import socket
 
-ESP_IP = "192.168.4.1"   # change to STA IP when needed
+ESP_IP = "172.29.227.9"   # change to STA IP when needed
 PORT = 502
 
 POLL_INTERVAL = 1        # seconds (safe for ESP32)
