@@ -42,6 +42,17 @@
           msg.textContent = text || "";
         }
 
+        // Show reason if redirected here
+        const params = new URLSearchParams(location.search);
+        const reason = params.get("reason");
+
+        if (reason === "kicked") {
+          setMsg(
+            "You were logged out because another client logged in.",
+            false
+          );
+        }
+
         async function login() {
           setMsg("", true);
           const user = u.value.trim();
@@ -60,6 +71,9 @@
           setMsg("Signing in...", true);
 
           try {
+            const ctrl = new AbortController();
+            setTimeout(() => ctrl.abort(), 5000);
+
             const r = await fetch("/api/login", {
               method: "POST",
               headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -69,6 +83,7 @@
                 "&password=" +
                 encodeURIComponent(pass),
               credentials: "include",
+              signal: ctrl.signal,
             });
 
             const t = (await r.text()).trim();
@@ -77,16 +92,22 @@
               location = "/index.html#status";
               return;
             }
+
             if (r.status === 409) {
               setMsg(
                 "Another client is active. Login will take over (if enabled).",
+                false
+              );
+            } else if (r.status === 503 || r.status === 429) {
+              setMsg(
+                "Login temporarily unavailable. Too many clients connected.",
                 false
               );
             } else {
               setMsg("Invalid username or password.", false);
             }
           } catch (e) {
-            setMsg("Login failed.", false);
+            setMsg("Connection error or timeout.", false);
           } finally {
             btn.disabled = false;
           }

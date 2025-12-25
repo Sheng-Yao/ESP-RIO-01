@@ -9,3 +9,301 @@
 [PC 2025-12-23 00:46:11] [ESP 380s] Latch STARTED (2s)
 [PC 2025-12-23 00:46:14] [ESP 382s] Relay OFF
 [PC 2025-12-23 00:46:14] [ESP 382s] Latch FINISHED
+[PC 2025-12-25 20:44:05] [ESP 46s] Relay OFF
+[PC 2025-12-25 20:44:05] [ESP 46s] Latch FINISHED
+[PC 2025-12-25 20:44:05] [ESP 46s] STA disconnected
+[PC 2025-12-25 20:44:05] [ESP 46s] AP ENABLED
+[PC 2025-12-25 20:44:05] [ESP 46s] AP clients = 1
+[PC 2025-12-25 20:44:27] [ESP 68s] Relay ON
+[PC 2025-12-25 20:44:27] [ESP 68s] Latch STARTED (2s)
+[PC 2025-12-25 20:44:31] [ESP 71s] Relay OFF
+[PC 2025-12-25 20:44:31] [ESP 71s] Latch FINISHED
+[PC 2025-12-25 20:44:35] [ESP 76s] Relay ON
+[PC 2025-12-25 20:44:42] [ESP 82s] Relay OFF
+[PC 2025-12-25 21:22:18] [ESP 33s] Relay OFF
+[PC 2025-12-25 21:22:18] [ESP 33s] Latch FINISHED
+[PC 2025-12-25 21:22:18] [ESP 33s] STA disconnected
+[PC 2025-12-25 21:22:18] [ESP 33s] AP ENABLED
+[PC 2025-12-25 21:22:18] [ESP 33s] AP clients = 1
+[PC 2025-12-25 21:22:34] [ESP 49s] Relay ON
+[PC 2025-12-25 21:22:38] [ESP 53s] Relay OFF
+[PC 2025-12-25 21:22:40] [ESP 54s] Relay ON
+[PC 2025-12-25 21:22:40] [ESP 54s] Latch STARTED (2s)
+[PC 2025-12-25 21:22:43] [ESP 58s] Relay OFF
+[PC 2025-12-25 21:22:43] [ESP 58s] Latch FINISHED
+[PC 2025-12-25 21:22:52] [ESP 67s] Relay ON
+[PC 2025-12-25 21:22:52] [ESP 67s] Latch STARTED (2s)
+[PC 2025-12-25 21:22:55] [ESP 70s] Relay OFF
+[PC 2025-12-25 21:22:55] [ESP 70s] Latch FINISHED
+[PC 2025-12-25 21:23:16] [ESP 91s] Relay ON
+[PC 2025-12-25 21:23:16] [ESP 91s] Latch STARTED (2s)
+[PC 2025-12-25 21:23:19] [ESP 94s] Relay OFF
+[PC 2025-12-25 21:23:19] [ESP 94s] Latch FINISHED
+[PC 2025-12-25 21:23:44] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-25 21:43:02] [ESP 5s] ESP32 RESTART DETECTED
+[PC 2025-12-25 21:43:23] [ESP 26s] Relay ON
+[PC 2025-12-25 21:43:25] [ESP 28s] Relay OFF
+[PC 2025-12-25 21:44:08] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-25 21:52:06] [ESP 8s] ESP32 RESTART DETECTED
+[PC 2025-12-25 21:52:18] [ESP 21s] Relay ON
+[PC 2025-12-25 21:52:18] [ESP 21s] Latch STARTED (4s)
+[PC 2025-12-25 21:52:24] [ESP 27s] Relay OFF
+[PC 2025-12-25 21:52:24] [ESP 27s] Latch FINISHED
+[PC 2025-12-25 21:52:31] [ESP 33s] Relay ON
+[PC 2025-12-25 21:52:31] [ESP 33s] Latch STARTED (4s)
+[PC 2025-12-25 21:52:35] [ESP 38s] Relay OFF
+[PC 2025-12-25 21:52:35] [ESP 38s] Latch FINISHED
+[PC 2025-12-25 21:52:47] [ESP 50s] Relay ON
+[PC 2025-12-25 21:52:47] [ESP 50s] Latch STARTED (2s)
+[PC 2025-12-25 21:52:51] [ESP 53s] Relay OFF
+[PC 2025-12-25 21:52:51] [ESP 53s] Latch FINISHED
+[PC 2025-12-25 21:52:52] [ESP 54s] Relay ON
+[PC 2025-12-25 21:52:52] [ESP 54s] Latch STARTED (2s)
+[PC 2025-12-25 21:52:55] [ESP 58s] Relay OFF
+[PC 2025-12-25 21:52:55] [ESP 58s] Latch FINISHED
+[PC 2025-12-25 21:52:58] [ESP 61s] Relay ON
+[PC 2025-12-25 21:53:04] [ESP 67s] Relay OFF
+[PC 2025-12-25 21:53:12] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-25 21:59:08] [ESP 10s] ESP32 RESTART DETECTED
+[PC 2025-12-25 21:59:18] [ESP 20s] Relay ON
+[PC 2025-12-25 21:59:18] [ESP 20s] Latch STARTED (2s)
+[PC 2025-12-25 21:59:21] [ESP 23s] Relay OFF
+[PC 2025-12-25 21:59:21] [ESP 23s] Latch FINISHED
+[PC 2025-12-25 21:59:22] [ESP 24s] Relay ON
+[PC 2025-12-25 21:59:22] [ESP 24s] Latch STARTED (2s)
+[PC 2025-12-25 21:59:25] [ESP 27s] Relay OFF
+[PC 2025-12-25 21:59:25] [ESP 27s] Latch FINISHED
+[PC 2025-12-25 21:59:40] [ESP 43s] Relay ON
+[PC 2025-12-25 21:59:40] [ESP 43s] Latch STARTED (2s)
+[PC 2025-12-25 21:59:43] [ESP 45s] Relay OFF
+[PC 2025-12-25 21:59:43] [ESP 45s] Latch FINISHED
+[PC 2025-12-25 21:59:44] [ESP 46s] Relay ON
+[PC 2025-12-25 21:59:44] [ESP 46s] Latch STARTED (1s)
+[PC 2025-12-25 21:59:46] [ESP 48s] Relay OFF
+[PC 2025-12-25 21:59:46] [ESP 48s] Latch FINISHED
+[PC 2025-12-25 21:59:47] [ESP 49s] Relay ON
+[PC 2025-12-25 21:59:56] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-25 22:06:24] [ESP 9s] ESP32 RESTART DETECTED
+[PC 2025-12-25 22:06:24] [ESP 9s] Relay OFF
+[PC 2025-12-25 22:06:35] [ESP 20s] Relay ON
+[PC 2025-12-25 22:06:35] [ESP 20s] Latch STARTED (2s)
+[PC 2025-12-25 22:06:40] [ESP 25s] Relay OFF
+[PC 2025-12-25 22:06:40] [ESP 25s] Latch FINISHED
+[PC 2025-12-25 22:06:47] [ESP 32s] Relay ON
+[PC 2025-12-25 22:06:47] [ESP 32s] Latch STARTED (2s)
+[PC 2025-12-25 22:06:50] [ESP 35s] Relay OFF
+[PC 2025-12-25 22:06:50] [ESP 35s] Latch FINISHED
+[PC 2025-12-25 22:07:05] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-25 22:10:30] [ESP 11s] ESP32 RESTART DETECTED
+[PC 2025-12-25 22:10:42] [ESP 23s] Relay ON
+[PC 2025-12-25 22:10:42] [ESP 23s] Latch STARTED (2s)
+[PC 2025-12-25 22:10:45] [ESP 26s] Relay OFF
+[PC 2025-12-25 22:10:45] [ESP 26s] Latch FINISHED
+[PC 2025-12-25 22:10:47] [ESP 28s] Relay ON
+[PC 2025-12-25 22:10:47] [ESP 28s] Latch STARTED (2s)
+[PC 2025-12-25 22:10:51] [ESP 31s] Relay OFF
+[PC 2025-12-25 22:10:51] [ESP 31s] Latch FINISHED
+[PC 2025-12-25 22:10:52] [ESP 32s] Relay ON
+[PC 2025-12-25 22:10:52] [ESP 32s] Latch STARTED (2s)
+[PC 2025-12-25 22:10:55] [ESP 35s] Relay OFF
+[PC 2025-12-25 22:10:55] [ESP 35s] Latch FINISHED
+[PC 2025-12-25 22:10:59] [ESP 40s] Relay ON
+[PC 2025-12-25 22:10:59] [ESP 40s] Latch STARTED (4s)
+[PC 2025-12-25 22:11:04] [ESP 44s] Relay OFF
+[PC 2025-12-25 22:11:04] [ESP 44s] Latch FINISHED
+[PC 2025-12-25 22:11:06] [ESP 46s] Relay ON
+[PC 2025-12-25 22:11:06] [ESP 46s] Latch STARTED (4s)
+[PC 2025-12-25 22:11:11] [ESP 51s] Relay OFF
+[PC 2025-12-25 22:11:11] [ESP 51s] Latch FINISHED
+[PC 2025-12-25 22:11:15] [ESP 55s] Relay ON
+[PC 2025-12-25 22:11:18] [ESP 59s] Relay OFF
+[PC 2025-12-25 22:11:20] [ESP 61s] Relay ON
+[PC 2025-12-25 22:11:20] [ESP 61s] Latch STARTED (4s)
+[PC 2025-12-25 22:11:25] [ESP 65s] Relay OFF
+[PC 2025-12-25 22:11:25] [ESP 65s] Latch FINISHED
+[PC 2025-12-25 22:12:00] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-25 22:18:56] [ESP 517s] Relay OFF
+[PC 2025-12-25 22:18:56] [ESP 517s] Latch FINISHED
+[PC 2025-12-25 22:18:56] [ESP 517s] STA disconnected
+[PC 2025-12-25 22:18:56] [ESP 517s] AP ENABLED
+[PC 2025-12-25 22:18:56] [ESP 517s] AP clients = 1
+[PC 2025-12-25 22:22:04] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-25 22:35:58] [ESP 11s] Relay OFF
+[PC 2025-12-25 22:35:58] [ESP 11s] Latch FINISHED
+[PC 2025-12-25 22:35:58] [ESP 11s] STA disconnected
+[PC 2025-12-25 22:35:58] [ESP 11s] AP ENABLED
+[PC 2025-12-25 22:35:58] [ESP 11s] AP clients = 1
+[PC 2025-12-25 22:36:09] [ESP 22s] Relay ON
+[PC 2025-12-25 22:36:09] [ESP 22s] Latch STARTED (5s)
+[PC 2025-12-25 22:36:14] [ESP 27s] Relay OFF
+[PC 2025-12-25 22:36:14] [ESP 27s] Latch FINISHED
+[PC 2025-12-25 22:36:19] [ESP 32s] Relay ON
+[PC 2025-12-25 22:36:19] [ESP 32s] Latch STARTED (3s)
+[PC 2025-12-25 22:36:23] [ESP 36s] Relay OFF
+[PC 2025-12-25 22:36:23] [ESP 36s] Latch FINISHED
+[PC 2025-12-25 22:36:57] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-25 22:46:46] [ESP 9s] ESP32 RESTART DETECTED
+[PC 2025-12-25 22:47:11] [ESP 34s] Relay ON
+[PC 2025-12-25 22:47:11] [ESP 34s] Latch STARTED (3s)
+[PC 2025-12-25 22:47:14] [ESP 36s] Relay OFF
+[PC 2025-12-25 22:47:14] [ESP 36s] Latch FINISHED
+[PC 2025-12-25 22:48:41] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-25 23:00:55] [ESP 7s] ESP32 RESTART DETECTED
+[PC 2025-12-25 23:01:31] [ESP 43s] Relay ON
+[PC 2025-12-25 23:01:31] [ESP 43s] Latch STARTED (3s)
+[PC 2025-12-25 23:01:34] [ESP 45s] Relay OFF
+[PC 2025-12-25 23:01:34] [ESP 45s] Latch FINISHED
+[PC 2025-12-25 23:01:38] [ESP 50s] Relay ON
+[PC 2025-12-25 23:01:38] [ESP 50s] Latch STARTED (3s)
+[PC 2025-12-25 23:01:41] [ESP 53s] Relay OFF
+[PC 2025-12-25 23:01:41] [ESP 53s] Latch FINISHED
+[PC 2025-12-25 23:01:47] [ESP 59s] Relay ON
+[PC 2025-12-25 23:01:49] [ESP 61s] Relay OFF
+[PC 2025-12-25 23:02:29] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-25 23:13:55] [ESP 10s] ESP32 RESTART DETECTED
+[PC 2025-12-25 23:14:09] [ESP 24s] Relay ON
+[PC 2025-12-25 23:14:09] [ESP 24s] Latch STARTED (3s)
+[PC 2025-12-25 23:14:12] [ESP 27s] Relay OFF
+[PC 2025-12-25 23:14:12] [ESP 27s] Latch FINISHED
+[PC 2025-12-25 23:14:13] [ESP 28s] Relay ON
+[PC 2025-12-25 23:14:13] [ESP 28s] Latch STARTED (3s)
+[PC 2025-12-25 23:14:16] [ESP 31s] Relay OFF
+[PC 2025-12-25 23:14:16] [ESP 31s] Latch FINISHED
+[PC 2025-12-25 23:14:18] [ESP 34s] Relay ON
+[PC 2025-12-25 23:14:18] [ESP 34s] Latch STARTED (3s)
+[PC 2025-12-25 23:14:21] [ESP 37s] Relay OFF
+[PC 2025-12-25 23:14:21] [ESP 37s] Latch FINISHED
+[PC 2025-12-25 23:14:26] [ESP 41s] Relay ON
+[PC 2025-12-25 23:14:28] [ESP 43s] Relay OFF
+[PC 2025-12-25 23:14:55] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-25 23:18:36] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-25 23:44:34] [ESP 36s] ESP32 RESTART DETECTED
+[PC 2025-12-25 23:45:08] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-25 23:50:57] [ESP 32s] ESP32 RESTART DETECTED
+[PC 2025-12-25 23:51:18] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-25 23:59:04] [ESP 41s] ESP32 RESTART DETECTED
+[PC 2025-12-25 23:59:28] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-26 00:19:27] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-26 00:58:03] [ESP 32s] Relay OFF
+[PC 2025-12-26 00:58:03] [ESP 32s] Latch FINISHED
+[PC 2025-12-26 00:58:03] [ESP 32s] STA connected (got IP)
+[PC 2025-12-26 00:58:03] [ESP 32s] AP DISABLED
+[PC 2025-12-26 00:58:03] [ESP 32s] AP clients = 0
+[PC 2025-12-26 00:58:43] [ESP 73s] Relay ON
+[PC 2025-12-26 00:58:46] [ESP 75s] Relay OFF
+[PC 2025-12-26 00:58:50] [ESP 79s] Relay ON
+[PC 2025-12-26 00:58:52] [ESP 81s] Relay OFF
+[PC 2025-12-26 00:58:53] [ESP 83s] Relay ON
+[PC 2025-12-26 00:58:53] [ESP 83s] Latch STARTED (3s)
+[PC 2025-12-26 00:58:57] [ESP 86s] Relay OFF
+[PC 2025-12-26 00:58:57] [ESP 86s] Latch FINISHED
+[PC 2025-12-26 01:09:46] Unexpected error: Modbus Error: [Input/Output] No response received after 3 retries, continue with next request
+[PC 2025-12-26 01:10:00] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-26 01:10:06] [ESP 9s] ESP32 RESTART DETECTED
+[PC 2025-12-26 01:10:14] [ESP 17s] Relay ON
+[PC 2025-12-26 01:10:14] [ESP 17s] Latch STARTED (3s)
+[PC 2025-12-26 01:10:18] [ESP 21s] Relay OFF
+[PC 2025-12-26 01:10:18] [ESP 21s] Latch FINISHED
+[PC 2025-12-26 01:10:26] [ESP 28s] Relay ON
+[PC 2025-12-26 01:10:26] [ESP 28s] Latch STARTED (3s)
+[PC 2025-12-26 01:10:29] [ESP 32s] Relay OFF
+[PC 2025-12-26 01:10:29] [ESP 32s] Latch FINISHED
+[PC 2025-12-26 01:10:40] [ESP 43s] Relay ON
+[PC 2025-12-26 01:10:40] [ESP 43s] Latch STARTED (3s)
+[PC 2025-12-26 01:10:43] [ESP 45s] Relay OFF
+[PC 2025-12-26 01:10:43] [ESP 45s] Latch FINISHED
+[PC 2025-12-26 01:16:49] Unexpected error: Modbus Error: [Input/Output] No response received after 3 retries, continue with next request
+[PC 2025-12-26 01:17:02] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-26 01:17:24] [ESP 1s] ESP32 RESTART DETECTED
+[PC 2025-12-26 01:17:56] [ESP 33s] Relay ON
+[PC 2025-12-26 01:17:56] [ESP 33s] Latch STARTED (2s)
+[PC 2025-12-26 01:17:59] [ESP 36s] Relay OFF
+[PC 2025-12-26 01:17:59] [ESP 36s] Latch FINISHED
+[PC 2025-12-26 01:22:45] Unexpected error: Modbus Error: [Input/Output] No response received after 3 retries, continue with next request
+[PC 2025-12-26 01:22:53] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-26 01:30:43] [ESP 3s] ESP32 RESTART DETECTED
+[PC 2025-12-26 01:30:54] [ESP 15s] Relay ON
+[PC 2025-12-26 01:30:54] [ESP 15s] Latch STARTED (3s)
+[PC 2025-12-26 01:30:57] [ESP 18s] Relay OFF
+[PC 2025-12-26 01:30:57] [ESP 18s] Latch FINISHED
+[PC 2025-12-26 01:30:59] [ESP 19s] Relay ON
+[PC 2025-12-26 01:30:59] [ESP 19s] Latch STARTED (3s)
+[PC 2025-12-26 01:31:02] [ESP 22s] Relay OFF
+[PC 2025-12-26 01:31:02] [ESP 22s] Latch FINISHED
+[PC 2025-12-26 01:31:03] [ESP 23s] Relay ON
+[PC 2025-12-26 01:31:03] [ESP 23s] Latch STARTED (3s)
+[PC 2025-12-26 01:31:06] [ESP 27s] Relay OFF
+[PC 2025-12-26 01:31:06] [ESP 27s] Latch FINISHED
+[PC 2025-12-26 01:31:08] [ESP 28s] Relay ON
+[PC 2025-12-26 01:31:08] [ESP 28s] Latch STARTED (3s)
+[PC 2025-12-26 01:31:11] [ESP 32s] Relay OFF
+[PC 2025-12-26 01:31:11] [ESP 32s] Latch FINISHED
+[PC 2025-12-26 01:42:23] Unexpected error: Modbus Error: [Input/Output] No response received after 3 retries, continue with next request
+[PC 2025-12-26 01:42:34] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-26 01:42:41] [ESP 1s] ESP32 RESTART DETECTED
+[PC 2025-12-26 01:42:56] [ESP 16s] Relay ON
+[PC 2025-12-26 01:42:56] [ESP 16s] Latch STARTED (2s)
+[PC 2025-12-26 01:42:58] [ESP 18s] Relay OFF
+[PC 2025-12-26 01:42:58] [ESP 18s] Latch FINISHED
+[PC 2025-12-26 01:43:00] [ESP 20s] Relay ON
+[PC 2025-12-26 01:43:00] [ESP 20s] Latch STARTED (3s)
+[PC 2025-12-26 01:43:03] [ESP 24s] Relay OFF
+[PC 2025-12-26 01:43:03] [ESP 24s] Latch FINISHED
+[PC 2025-12-26 01:43:09] [ESP 30s] Relay ON
+[PC 2025-12-26 01:43:09] [ESP 30s] Latch STARTED (4s)
+[PC 2025-12-26 01:43:14] [ESP 34s] Relay OFF
+[PC 2025-12-26 01:43:14] [ESP 34s] Latch FINISHED
+[PC 2025-12-26 01:43:18] [ESP 38s] Relay ON
+[PC 2025-12-26 01:43:18] [ESP 38s] Latch STARTED (4s)
+[PC 2025-12-26 01:43:23] [ESP 43s] Relay OFF
+[PC 2025-12-26 01:43:23] [ESP 43s] Latch FINISHED
+[PC 2025-12-26 01:43:26] [ESP 47s] Relay ON
+[PC 2025-12-26 01:43:26] [ESP 47s] Latch STARTED (5s)
+[PC 2025-12-26 01:43:31] [ESP 52s] Relay OFF
+[PC 2025-12-26 01:43:31] [ESP 52s] Latch FINISHED
+[PC 2025-12-26 01:43:33] [ESP 53s] Relay ON
+[PC 2025-12-26 01:43:33] [ESP 53s] Latch STARTED (5s)
+[PC 2025-12-26 01:43:37] [ESP 58s] Relay OFF
+[PC 2025-12-26 01:43:37] [ESP 58s] Latch FINISHED
+[PC 2025-12-26 01:46:44] [ESP 244s] Relay OFF
+[PC 2025-12-26 01:46:44] [ESP 244s] Latch FINISHED
+[PC 2025-12-26 01:46:44] [ESP 244s] STA connected (got IP)
+[PC 2025-12-26 01:46:44] [ESP 244s] AP DISABLED
+[PC 2025-12-26 01:46:44] [ESP 244s] AP clients = 0
+[PC 2025-12-26 01:46:48] [ESP 249s] Relay ON
+[PC 2025-12-26 01:46:48] [ESP 249s] Latch STARTED (4s)
+[PC 2025-12-26 01:46:53] [ESP 254s] Relay OFF
+[PC 2025-12-26 01:46:53] [ESP 254s] Latch FINISHED
+[PC 2025-12-26 01:51:41] Unexpected error: Modbus Error: [Input/Output] No response received after 3 retries, continue with next request
+[PC 2025-12-26 01:51:49] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-26 01:52:03] [ESP 6s] ESP32 RESTART DETECTED
+[PC 2025-12-26 01:52:14] [ESP 17s] Relay ON
+[PC 2025-12-26 01:52:14] [ESP 17s] Latch STARTED (5s)
+[PC 2025-12-26 01:52:18] [ESP 22s] Relay OFF
+[PC 2025-12-26 01:52:18] [ESP 22s] Latch FINISHED
+[PC 2025-12-26 01:52:23] [ESP 27s] Relay ON
+[PC 2025-12-26 01:52:23] [ESP 27s] Latch STARTED (3s)
+[PC 2025-12-26 01:52:27] [ESP 31s] Relay OFF
+[PC 2025-12-26 01:52:27] [ESP 31s] Latch FINISHED
+[PC 2025-12-26 01:52:29] [ESP 33s] Relay ON
+[PC 2025-12-26 01:52:35] [ESP 39s] Relay OFF
+[PC 2025-12-26 02:10:51] Unexpected error: Modbus Error: [Input/Output] No response received after 3 retries, continue with next request
+[PC 2025-12-26 02:11:03] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-26 02:11:09] [ESP 7s] ESP32 RESTART DETECTED
+[PC 2025-12-26 02:11:58] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-26 02:12:03] [ESP 6s] ESP32 RESTART DETECTED
+[PC 2025-12-26 02:12:31] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-26 02:12:37] [ESP 7s] ESP32 RESTART DETECTED
+[PC 2025-12-26 02:24:35] Unexpected error: Modbus Error: [Input/Output] No response received after 3 retries, continue with next request
+[PC 2025-12-26 02:24:43] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-26 02:24:56] [ESP 11s] ESP32 RESTART DETECTED
+[PC 2025-12-26 02:25:11] Connection lost ([WinError 10054] An existing connection was forcibly closed by the remote host)
+[PC 2025-12-26 02:25:16] [ESP 6s] ESP32 RESTART DETECTED
+[PC 2025-12-26 02:25:32] [ESP 22s] Relay ON
+[PC 2025-12-26 02:25:32] [ESP 22s] Latch STARTED (3s)
+[PC 2025-12-26 02:25:34] [ESP 25s] Relay OFF
+[PC 2025-12-26 02:25:34] [ESP 25s] Latch FINISHED
+[PC 2025-12-26 02:25:36] [ESP 27s] Relay ON
+[PC 2025-12-26 02:25:36] [ESP 27s] Latch STARTED (3s)
+[PC 2025-12-26 02:25:40] [ESP 30s] Relay OFF
+[PC 2025-12-26 02:25:40] [ESP 30s] Latch FINISHED

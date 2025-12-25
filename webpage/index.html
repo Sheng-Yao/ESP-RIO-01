@@ -87,8 +87,10 @@
           <label for="w_ssid">SSID</label>
           <input id="w_ssid" />
 
-          <label for="w_pass">Password</label>
-          <input id="w_pass" type="password" />
+          <div id="pskFields">
+            <label for="w_pass">Password</label>
+            <input id="w_pass" type="password" />
+          </div>
 
           <label for="w_mac">MAC Address (BSSID, optional)</label>
           <input id="w_mac" placeholder="AA:BB:CC:DD:EE:FF" />
@@ -129,6 +131,10 @@
           <div id="ipFields" class="hidden">
             <label for="w_ip">IP Address</label>
             <input id="w_ip" placeholder="192.168.1.50" />
+            <div class="smallnote">
+              Fixed IP requires gateway and netmask in firmware. Otherwise DHCP
+              will be used.
+            </div>
           </div>
 
           <div id="wifiMsg" class="msg"></div>
@@ -221,7 +227,7 @@
           );
 
         /* ================= Session & fetch wrapper ================= */
-        const INACT_MS = 30 * 60 * 1000;
+        const INACT_MS = 10 * 60 * 1000;
         let lastAct = Date.now();
 
         ["click", "keydown", "touchstart"].forEach((ev) =>
@@ -336,39 +342,100 @@
 
         async function loadStatus() {
           if (!pageVisible) return;
+
           try {
             const r = await apiFetch("/api/status");
             const j = await r.json();
 
+            /* ===== WiFi ===== */
             st_ssid.textContent = j.ssid ?? j.wifi_ssid ?? "--";
+            currentSsid = j.ssid ?? j.wifi_ssid ?? null;
+
             st_ip.textContent = j.ip ?? j.wifi_ip ?? "--";
             st_mac.textContent = j.mac ?? j.wifi_mac ?? "--";
+
             st_rssi.textContent =
               (j.rssi ?? j.wifi_rssi) != null
                 ? (j.rssi ?? j.wifi_rssi) + " dBm"
                 : "--";
 
-            st_do0.textContent = j.do0 != null ? (j.do0 ? "ON" : "OFF") : "--";
+            /* ===== Device ===== */
             st_temp.textContent = j.temp != null ? j.temp + " °C" : "--";
+
             st_uptime.textContent = j.uptime != null ? fmtSecs(j.uptime) : "--";
+
+            if (j.fw != null && fwEl.textContent === "--") {
+              fwEl.textContent = j.fw;
+            }
+
+            /* ===== Latch config ===== */
+            if (j.latch_enable != null) {
+              latch0.checked = !!j.latch_enable;
+            }
+
             if (j.latch_time != null) {
               const lt = Number(j.latch_time);
-              if (Number.isFinite(lt)) {
-                if (lastLatchTime === null) {
-                  lastLatchTime = lt;
-                  latchTime.value = lt;
-                }
+              if (Number.isFinite(lt) && lastLatchTime === null) {
+                lastLatchTime = lt;
+                latchTime.value = lt;
               }
             }
 
-            if (j.fw != null && fwEl.textContent === "--")
-              fwEl.textContent = j.fw;
-          } catch (e) {}
+            /* ===== Latch runtime state ===== */
+            const fwLatchActive = j.latch_enable && j.latch_rem > 0;
+
+            if (fwLatchActive) {
+              latchActive = true;
+            } else if (latchActive) {
+              // latch just finished
+              latchActive = false;
+              gpioCmdPending = false;
+              gpioCmdTarget = null;
+            }
+
+            /* ===== GPIO sync (CRITICAL PART) ===== */
+
+            const fwDo0 = !!j.do0;
+
+            if (gpioCmdPending) {
+              /*
+               * User has sent a command.
+               * Do NOT let polling override UI
+               * until firmware matches target.
+               */
+              if (fwDo0 === gpioCmdTarget) {
+                // Firmware caught up
+                gpioCmdPending = false;
+                gpioCmdTarget = null;
+                do0.checked = fwDo0;
+              }
+              // else: keep UI as-is
+            } else {
+              /*
+               * No pending command:
+               * reflect firmware state directly
+               */
+              do0.checked = fwDo0;
+            }
+
+            st_do0.textContent = fwDo0 ? "ON" : "OFF";
+
+            /* ===== WiFi table refresh (safe) ===== */
+            if (wifiLoaded && activeTab === "wifi") {
+              renderWifiList(wifiStaged);
+            }
+          } catch (e) {
+            // silent fail is intentional for robustness
+          }
         }
 
         setInterval(() => {
-          if (activeTab === "status") loadStatus();
-        }, 3000);
+          if (!pageVisible) return;
+
+          if (activeTab === "status" || activeTab === "io") {
+            loadStatus();
+          }
+        }, 1000); // or 1000 if you prefer
 
         /* ================= WiFi staging model =================
            - ESP32 is NOT updated on Save/Delete/Edit
@@ -390,6 +457,7 @@
         const w_prio = $("w_prio");
         const w_auth = $("w_auth");
         const peapFields = $("peapFields");
+        const pskFields = $("pskFields");
         const tlsFields = $("tlsFields");
         const w_ent_user = $("w_ent_user");
         const w_ent_pass = $("w_ent_pass");
@@ -408,6 +476,7 @@
         let wifiOriginal = []; // last fetched from ESP32
         let wifiStaged = []; // user edits (not applied yet)
         let wifiDirty = false; // pending changes
+        let currentSsid = null;
 
         function setWifiDirty(on) {
           wifiDirty = !!on;
@@ -510,8 +579,17 @@
 
         function updateWifiConditionalUI() {
           const a = w_auth.value;
+
+          // WPA2-PSK password only for PSK
+          pskFields.classList.toggle("hidden", a !== "psk");
+
+          // Enterprise fields
           peapFields.classList.toggle("hidden", a !== "peap");
           tlsFields.classList.toggle("hidden", a !== "tls");
+
+          // Clear PSK password if not used
+          if (a !== "psk") w_pass.value = "";
+
           const ipm = w_ipmode.value;
           ipFields.classList.toggle("hidden", ipm !== "fixed");
         }
@@ -606,9 +684,10 @@
 
           for (const w of list) {
             const tr = document.createElement("tr");
-            const connected = w.connected
-              ? `<span class="badge ok">Yes</span>`
-              : `<span class="badge no">No</span>`;
+            const connected =
+              currentSsid && w.ssid.trim() === currentSsid.trim()
+                ? `<span class="badge ok">Yes</span>`
+                : `<span class="badge no">No</span>`;
 
             tr.innerHTML = `
               <td>${esc(w.ssid || "--")}</td>
@@ -735,7 +814,7 @@
           try {
             // Build payload for firmware: keep it small and explicit
             const payload = wifiStaged.map((w) => ({
-              id: w.id,
+              id: typeof w.id === "number" && w.id >= 0 ? w.id : null,
               ssid: w.ssid,
               mac: w.bssid || null,
               priority: w.priority,
@@ -743,7 +822,7 @@
               ent_user: w.auth === "peap" ? w.user || "" : null,
               // passwords/certs are optional; firmware can decide how to interpret empty
               pass: w._secrets ? w._secrets.pass || "" : "",
-              ent_pass: w._secrets ? w._secrets.ent_pass || "" : "",
+              ent_pass: w.auth === "peap" ? w._secrets?.ent_pass || "" : null,
               ip_mode: w.ip_mode,
               ip: w.ip_mode === "fixed" ? w.ip || "" : null,
             }));
@@ -785,7 +864,27 @@
         const do0 = $("do0");
         const latchTime = $("latchTime");
         const ioApplyBtn = $("ioApplyBtn");
+        let latchActive = false;
+        let uiUpdating = false;
+        let gpioPending = false;
+        let gpioCmdPending = false;
+        let gpioCmdTarget = null; // true or false
+
         let lastLatchTime = null; // last latch time confirmed by ESP32
+
+        latch0.addEventListener("change", async () => {
+          try {
+            await apiFetch("/api/latch_enable", {
+              method: "POST",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: "en=" + (latch0.checked ? "1" : "0"),
+            });
+          } catch (e) {
+            // rollback UI if failed
+            latch0.checked = !latch0.checked;
+            setMsg(ioMsg, "Failed to update latch enable.", false);
+          }
+        });
 
         function validateLatchTime() {
           const v = Number(latchTime.value);
@@ -793,6 +892,29 @@
             return "Latch Time must be 1–300 seconds.";
           return "";
         }
+
+        do0.addEventListener("change", async () => {
+          if (uiUpdating || gpioCmdPending) return;
+
+          gpioCmdTarget = do0.checked;
+          gpioCmdPending = true;
+          do0.disabled = true;
+
+          try {
+            await apiFetch("/api/do0", {
+              method: "POST",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: "on=" + (gpioCmdTarget ? "1" : "0"),
+            });
+          } catch (e) {
+            do0.checked = !gpioCmdTarget;
+            gpioCmdPending = false;
+            gpioCmdTarget = null;
+            setMsg(ioMsg, "Failed to set GPIO output.", false);
+          } finally {
+            do0.disabled = false;
+          }
+        });
 
         ioApplyBtn.addEventListener("click", async () => {
           const err = validateLatchTime();
@@ -802,40 +924,22 @@
           }
 
           const newLatchTime = Number(latchTime.value);
-          const latchChanged =
-            lastLatchTime === null || newLatchTime !== lastLatchTime;
-
-          ioApplyBtn.disabled = true;
-          setMsg(ioMsg, "Applying...", true);
+          if (lastLatchTime === newLatchTime) {
+            setMsg(ioMsg, "No changes to apply.", true);
+            return;
+          }
 
           try {
-            // Always apply DO state (safe and lightweight)
-            await apiFetch("/api/do0", {
+            await apiFetch("/api/latch", {
               method: "POST",
-              headers: { "Content-Type": "application/x-www-form-urlencoded" },
-              body: "on=" + (do0.checked ? "1" : "0"),
+              body: String(newLatchTime),
             });
 
-            // Only send latch time if it CHANGED
-            if (latch0.checked && do0.checked && latchChanged) {
-              await apiFetch("/api/latch", {
-                method: "POST",
-                body: String(newLatchTime),
-              });
-
-              lastLatchTime = newLatchTime; // mark as applied
-            }
-
-            if (latchChanged) {
-              setMsg(ioMsg, "Applied.", true);
-            } else {
-              setMsg(ioMsg, "No changes to apply.", true);
-            }
+            lastLatchTime = newLatchTime;
+            setMsg(ioMsg, "Latch time updated.", true);
             loadStatus();
           } catch (e) {
-            setMsg(ioMsg, "Apply failed.", false);
-          } finally {
-            ioApplyBtn.disabled = false;
+            setMsg(ioMsg, "Failed to update latch time.", false);
           }
         });
 
@@ -874,18 +978,14 @@
               body: params.toString(),
             });
 
-            let ok = r.ok;
-            let msg = "Updated.";
-            try {
-              const j = await r.json();
-              ok = j.status === "ok";
-              msg = j.message || (ok ? "Updated." : "Failed.");
-            } catch (e) {}
+            const j = await r.json();
 
-            setMsg(adminMsg, msg, ok);
-            if (ok) {
+            if (j.status === "ok") {
+              setMsg(adminMsg, j.message || "Login updated.", true); // ✅ GREEN
               oldpw.value = "";
               newpw.value = "";
+            } else {
+              setMsg(adminMsg, j.message || "Update failed.", false); // ❌ RED
             }
           } catch (e) {
             setMsg(adminMsg, "Update failed.", false);
@@ -903,7 +1003,9 @@
         });
 
         /* ================= Init ================= */
-        loadStatus();
+        requestAnimationFrame(() => {
+          loadStatus();
+        });
       })();
     </script>
   </body>
